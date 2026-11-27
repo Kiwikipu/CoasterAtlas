@@ -1,53 +1,79 @@
 // Tampon passeport CoasterAtlas (décision n°006, voir docs/design-system.md)
+// Effet d'encre : contour légèrement irrégulier grâce à un filtre SVG.
+import { useId } from "react";
+import { ArtGlyph, type ArtKind } from "./Art";
+import { STATUS_META, type StampStatus } from "@/data/parks";
 
-export type StampStatus =
-  | "decouvrir"
-  | "wishlist"
-  | "visite"
-  | "prochain"
-  | "defi";
+export type { StampStatus };
 
-const STYLES: Record<
-  StampStatus,
-  { label: string; icon: string; ink: string; fill: string; className?: string }
-> = {
-  decouvrir: { label: "À DÉCOUVRIR", icon: "🏰", ink: "#7a8094", fill: "#ffffff" },
-  wishlist: { label: "WISHLIST", icon: "⭐", ink: "#4f8fc0", fill: "#eaf4fb" },
-  visite: { label: "VISITÉ", icon: "🏰", ink: "#5f9e57", fill: "#eef7ec", className: "animate-stamp-drop" },
-  prochain: { label: "PROCHAIN VOYAGE", icon: "✈️", ink: "#e08a3c", fill: "#fef3e8", className: "animate-stamp-pulse" },
-  defi: { label: "DÉFI", icon: "🏆", ink: "#9a72c4", fill: "#f5eefc" },
+const DEFAULT_ART: Record<StampStatus, ArtKind> = {
+  decouvrir: "castle",
+  wishlist: "star",
+  visite: "castle",
+  prochain: "plane",
+  defi: "flag",
 };
 
 export default function Stamp({
   status,
   size = 112,
+  art,
+  label,
+  sublabel,
+  caption = false,
+  animate = true,
+  rotate = 0,
+  className = "",
 }: {
   status: StampStatus;
   size?: number;
+  art?: ArtKind;
+  label?: string;
+  sublabel?: string;
+  caption?: boolean;
+  animate?: boolean;
+  rotate?: number;
+  className?: string;
 }) {
-  const s = STYLES[status];
-  const id = `arc-${status}`;
+  const s = STATUS_META[status];
+  const id = useId().replace(/:/g, "");
+  const anim = !animate ? "" : status === "prochain" ? "animate-stamp-pulse" : "";
+  const text = (label ?? s.short).toUpperCase();
+  const fontSize = text.length > 16 ? 8.5 : 10.5;
   return (
-    <figure className="flex flex-col items-center gap-2">
-      <div className={s.className} style={{ width: size, height: size }}>
+    <figure className={`flex flex-col items-center gap-2 ${className}`}>
+      <div className={anim} style={{ width: size, height: size, transform: rotate ? `rotate(${rotate}deg)` : undefined }}>
         <svg viewBox="0 0 120 120" width={size} height={size} aria-hidden="true">
           <defs>
-            <path id={id} d="M 60,60 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
+            <path id={`arc-${id}`} d="M 60,60 m -43,0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0" />
+            <filter id={`ink-${id}`} x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" />
+              <feDisplacementMap in="SourceGraphic" scale="2.2" />
+            </filter>
           </defs>
-          {/* Contour légèrement irrégulier, comme de l'encre */}
-          <circle cx="60" cy="60" r="56" fill={s.fill} stroke={s.ink} strokeWidth="2.5" strokeDasharray="60 2 30 3 80 1.5" />
-          <circle cx="60" cy="60" r="33" fill="none" stroke={s.ink} strokeWidth="1.2" opacity="0.7" />
-          <text fill={s.ink} fontSize="10.5" fontWeight="700" letterSpacing="2.5" fontFamily="var(--font-poppins)">
-            <textPath href={`#${id}`} startOffset="25%" textAnchor="middle">
-              {s.label}
-            </textPath>
-          </text>
-          <text x="60" y="70" fontSize="28" textAnchor="middle">
-            {s.icon}
-          </text>
+          <circle cx="60" cy="60" r="57" fill={s.fill} />
+          <g filter={`url(#ink-${id})`} color={s.ink}>
+            <circle cx="60" cy="60" r="55" fill="none" stroke={s.ink} strokeWidth="2.6" />
+            <circle cx="60" cy="60" r="32" fill="none" stroke={s.ink} strokeWidth="1.3" opacity="0.75" />
+            <text fill={s.ink} fontSize={fontSize} fontWeight="700" letterSpacing="2.2" fontFamily="var(--font-poppins), sans-serif">
+              <textPath href={`#arc-${id}`} startOffset="25%" textAnchor="middle">
+                {text}
+              </textPath>
+            </text>
+            {sublabel && (
+              <text x="60" y="106" textAnchor="middle" fill={s.ink} fontSize="7.5" fontWeight="700" letterSpacing="1" fontFamily="var(--font-poppins), sans-serif">
+                {sublabel.toUpperCase()}
+              </text>
+            )}
+            <circle cx="22" cy="78" r="1.6" fill={s.ink} />
+            <circle cx="98" cy="78" r="1.6" fill={s.ink} />
+            <g transform="translate(41 41) scale(0.38)">
+              <ArtGlyph kind={art ?? DEFAULT_ART[status]} strokeWidth={5.5} />
+            </g>
+          </g>
         </svg>
       </div>
-      <figcaption className="text-sm text-navy/70">{s.label.charAt(0) + s.label.slice(1).toLowerCase()}</figcaption>
+      {caption && <figcaption className="text-sm text-navy/70">{s.label}</figcaption>}
     </figure>
   );
 }

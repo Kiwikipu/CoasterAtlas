@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Poppins } from "next/font/google";
 import "./globals.css";
+import { AtlasProvider } from "@/lib/store";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -12,6 +13,8 @@ const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
 });
+
+export const viewport = { themeColor: "#fff9f2" };
 
 export const metadata: Metadata = {
   title: "CoasterAtlas — Explore. Ride. Collect. Remember.",
@@ -27,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${poppins.variable} ${nunito.variable} antialiased`}>
-        {children}
+        <AtlasProvider>{children}</AtlasProvider>
       </body>
     </html>
   );
