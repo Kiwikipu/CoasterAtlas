@@ -5,7 +5,7 @@ import Scene from "@/components/Scene";
 import { BackHeader, Progress } from "@/components/ui";
 import { CHALLENGES } from "@/data/demo";
 import { parkById } from "@/data/parks";
-import { Medal } from "../../accueil/Home";
+import Medal from "@/components/Medal";
 
 export function generateStaticParams() {
   return CHALLENGES.map((c) => ({ id: c.id }));

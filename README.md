@@ -58,10 +58,9 @@ Puis ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur. C
 
 | Adresse | Page |
 | --- | --- |
-| `/` | Site vitrine : logo, tampons, la carte, les 3 moments du voyage, bêta « Devenir Atlaster Fondateur » |
-| `/bienvenue` | Premier lancement : 4 écrans pour faire rêver, puis « Quel type d'Atlaster es-tu ? » |
-| `/accueil` | Accueil de l'app : « Bonjour Aurore ! », parcs proches, prochains voyages, défi, dernier souvenir, nouveautés |
-| `/carte` | Carte du monde pastel avec les tampons (zoom, légende-filtres, recherche, fiche parc) |
+| `/` | **Mon Voyage** : la grande carte du monde avec les tampons passeport (légende, filtre, « autour de moi »), puis prochain voyage, défi du moment, Explorer, Ton Atlas, souvenir du jour, Atlasters |
+| `/carte` | Carte en plein écran avec recherche et zoom |
+| `/bienvenue` | Premier lancement : 4 écrans, puis « Quel type d'Atlaster es-tu ? » |
 | `/parcs` et `/parcs/europa-park` | Liste des parcs et fiche parc |
 | `/coasters` et `/coasters/silver-star` | Liste des coasters (« Je l'ai fait ») et fiche coaster |
 | `/atlas`, `/passeport` | Mon Atlas (profil, carte, badges) et passeport avec la frise des visites |
@@ -70,7 +69,7 @@ Puis ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur. C
 | `/voyages` | Planificateur : billets, hôtel, parking, transport, checklist |
 | `/visite` | « Je visite un parc » : pose un tampon avec l'animation « clac » |
 
-Le bouton central **+** ouvre les raccourcis : je visite un parc, ajouter un coaster, ajouter un souvenir, écrire un avis, ma wishlist.
+Le bouton central **globe** ouvre les raccourcis : je visite un parc, ajouter un coaster, ajouter un souvenir, écrire un avis, ma wishlist.
 
 Les données sont **des exemples** (`src/data/`). Le profil de démonstration (tampons, coasters faits, checklist) est gardé dans ton navigateur : rien n'est envoyé sur un serveur pour l'instant.
 
@@ -96,8 +95,7 @@ docs/               Product Book, design system, maquettes
 
 - [x] Identité visuelle : couleurs, polices, tampons (voir [docs/](docs/))
 - [x] Prototype complet du site : accueil, carte, fiches parc et coaster, Atlas, passeport, défis, carnet, voyages
-- [x] Formulaire « Devenir Atlaster Fondateur » (interface)
-- [ ] Enregistrer la liste d'attente (choisir un service : à décider ensemble)
+- [ ] Liste d'attente « Devenir Atlaster Fondateur » (plus tard)
 - [ ] Vraies données de parcs et de coasters
 - [ ] « Autour de moi » avec la vraie position (déjà possible en démo)
 - [ ] Comptes utilisateurs : coasters faits, favoris, badges

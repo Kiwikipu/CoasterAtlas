@@ -8,8 +8,8 @@ import { LogoMark, Wordmark } from "./Logo";
 import { Avatar } from "./ui";
 
 const MENU: { href: string; label: string; icon: IconName }[] = [
-  { href: "/accueil", label: "Accueil", icon: "home" },
-  { href: "/carte", label: "Carte du monde", icon: "globe" },
+  { href: "/", label: "Mon voyage (la carte)", icon: "home" },
+  { href: "/carte", label: "Explorer en plein écran", icon: "globe" },
   { href: "/parcs", label: "Tous les parcs", icon: "pin" },
   { href: "/coasters", label: "Coasters", icon: "coaster" },
   { href: "/atlas", label: "Mon Atlas", icon: "map" },
@@ -18,10 +18,9 @@ const MENU: { href: string; label: string; icon: IconName }[] = [
   { href: "/carnet", label: "Carnet de voyage", icon: "camera" },
   { href: "/voyages", label: "Mes voyages", icon: "suitcase" },
   { href: "/bienvenue", label: "Revoir l'accueil Atlaster", icon: "sparkles" },
-  { href: "/", label: "Le site CoasterAtlas", icon: "info" },
 ];
 
-export default function AppHeader() {
+export default function AppHeader({ logo = false }: { logo?: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -30,8 +29,14 @@ export default function AppHeader() {
           <Icon name="menu" size={24} />
           <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-coral" />
         </button>
+        {logo && (
+          <Link href="/" className="flex items-center gap-1.5">
+            <LogoMark size={40} />
+            <Wordmark className="text-xl sm:text-2xl" />
+          </Link>
+        )}
         <div className="flex items-center gap-3">
-          <button aria-label="Notifications" className="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-white">
+          <button aria-label="Notifications" className={`relative h-10 w-10 items-center justify-center rounded-full hover:bg-white ${logo ? "hidden sm:flex" : "flex"}`}>
             <Icon name="bell" size={23} />
             <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full border-2 border-cream bg-coral" />
           </button>

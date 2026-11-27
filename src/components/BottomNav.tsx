@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import Icon, { type IconName } from "./Icon";
 
 const LEFT: { href: string; label: string; icon: IconName }[] = [
-  { href: "/accueil", label: "Accueil", icon: "home" },
+  { href: "/", label: "Mon Voyage", icon: "home" },
   { href: "/carte", label: "Explorer", icon: "globe" },
 ];
 const RIGHT: { href: string; label: string; icon: IconName }[] = [
-  { href: "/voyages", label: "Voyages", icon: "suitcase" },
-  { href: "/atlas", label: "Profil", icon: "user" },
+  { href: "/atlas", label: "Atlas", icon: "book" },
+  { href: "/passeport", label: "Profil", icon: "user" },
 ];
 
 // Le bouton central : tout CoasterAtlas en un clic
@@ -29,14 +29,14 @@ export default function BottomNav() {
   useEffect(() => setOpen(false), [pathname]);
 
   const item = (l: (typeof LEFT)[number]) => {
-    const active = pathname === l.href || pathname.startsWith(l.href + "/");
+    const active = l.href === "/" ? pathname === "/" : pathname === l.href || pathname.startsWith(l.href + "/");
     return (
       <Link
         key={l.href}
         href={l.href}
         className={`flex flex-1 flex-col items-center gap-0.5 py-1 text-[11px] font-semibold transition ${active ? "text-teal-dark" : "text-navy/45 hover:text-navy/70"}`}
       >
-        <Icon name={l.icon} size={23} filled={active && l.icon === "home"} strokeWidth={active ? 2 : 1.7} />
+        <Icon name={l.icon} size={23} filled={active && false} strokeWidth={active ? 2 : 1.7} />
         {l.label}
       </Link>
     );
@@ -80,10 +80,10 @@ export default function BottomNav() {
               onClick={() => setOpen((o) => !o)}
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu d'actions"}
               aria-expanded={open}
-              className={`-mt-8 flex h-15 w-15 items-center justify-center rounded-full text-white shadow-lg shadow-teal/40 ring-4 ring-cream transition-all duration-300 ${open ? "rotate-45 bg-teal-dark" : "bg-teal hover:bg-teal-dark"}`}
+              className={`-mt-8 flex items-center justify-center rounded-full text-white shadow-lg shadow-lilac/50 ring-4 ring-cream transition-all duration-300 ${open ? "bg-navy" : "bg-gradient-to-br from-lilac to-lilac-dark hover:brightness-105"}`}
               style={{ width: 60, height: 60 }}
             >
-              <Icon name="plus" size={30} strokeWidth={2.4} />
+              <Icon name={open ? "x" : "globe"} size={open ? 26 : 30} strokeWidth={open ? 2.4 : 1.8} />
             </button>
           </div>
           {RIGHT.map(item)}

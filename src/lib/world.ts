@@ -19,12 +19,12 @@ const W = 1000;
 const H = 520;
 
 function tintFor(lon: number, lat: number) {
-  if (lat > 35 && lon > -25 && lon < 45) return "#f9e1e7"; // Europe : rose poudré
-  if (lon < -30 && lat > 12) return "#fbe6cd"; // Amérique du Nord : pêche crème
-  if (lon < -30) return "#e6f0c6"; // Amérique du Sud : sauge citron
-  if (lon >= -25 && lon < 52 && lat <= 35) return "#fbefc6"; // Afrique : sable doux
-  if (lon > 110 && lat < -8) return "#ebe0f6"; // Océanie : lilas
-  return "#d9edd4"; // Asie : sauge
+  if (lat > 35 && lon > -25 && lon < 45) return "#f6f0dc"; // Europe : crème
+  if (lon < -30 && lat > 12) return "#eef1d8"; // Amérique du Nord : crème sauge
+  if (lon < -30) return "#e9f0d3"; // Amérique du Sud : sauge
+  if (lon >= -25 && lon < 52 && lat <= 35) return "#f7efd6"; // Afrique : sable doux
+  if (lon > 110 && lat < -8) return "#f1ecd6"; // Océanie : crème
+  return "#ecf1d9"; // Asie : sauge claire
 }
 
 let cache: WorldData | null = null;
@@ -63,6 +63,15 @@ export function getWorld(): WorldData {
     { kind: "forest", ...xy(pt(-100, 57)) },
     { kind: "forest", ...xy(pt(100, 60)) },
     { kind: "balloon", ...xy(pt(120, -45)) },
+    { kind: "forest", ...xy(pt(25, 63)) },
+    { kind: "forest", ...xy(pt(-62, -8)) },
+    { kind: "forest", ...xy(pt(22, 0)) },
+    { kind: "forest", ...xy(pt(-80, 48)) },
+    { kind: "mountain", ...xy(pt(-68, -24)) },
+    { kind: "mountain", ...xy(pt(-112, 44)) },
+    { kind: "boat", ...xy(pt(-28, -22)) },
+    { kind: "cloud", ...xy(pt(40, -40)) },
+    { kind: "balloon", ...xy(pt(75, 45)) },
   ];
 
   cache = { width: W, height: H, countries, parks, deco };

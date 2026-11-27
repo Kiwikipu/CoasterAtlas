@@ -3,16 +3,16 @@
 // Carte du monde pastel, interactive : zoom (molette, pincement, boutons), déplacement,
 // tampons passeport cliquables. Les pays visités se colorent en vert sauge.
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, useCallback, useId, useEffect, useImperativeHandle, useRef, useState } from "react";
 import type { WorldData } from "@/lib/world";
 import { PARKS, STATUS_META, type StampStatus } from "@/data/parks";
 import { useAtlas, useStats } from "@/lib/store";
 import { ArtGlyph, type ArtKind } from "./Art";
 import Icon from "./Icon";
 
-export type WorldMapHandle = { focus: (parkId: string, k?: number) => void; reset: () => void };
+export type WorldMapHandle = { focus: (parkId: string, k?: number) => void; reset: () => void; jump: (v: View) => void };
 
-type View = { k: number; x: number; y: number };
+export type View = { k: number; x: number; y: number };
 
 const ICON_FOR: Record<StampStatus, ArtKind | null> = {
   decouvrir: null,
@@ -33,13 +33,16 @@ const WorldMap = forwardRef<WorldMapHandle, {
   showControls?: boolean;
   initial?: View;
   className?: string;
+  featured?: string[]; // parcs affichés en grand tampon passeport (avec leur nom)
+  featuredPx?: number;
 }>(function WorldMap(
-  { world, interactive = true, fill = false, stampPx = 15, filter, selected = null, onSelect, showControls = true, initial, className = "" },
+  { world, interactive = true, fill = false, stampPx = 15, filter, selected = null, onSelect, showControls = true, initial, className = "", featured, featuredPx = 30 },
   ref,
 ) {
   const { statuses, justStamped } = useAtlas();
   const { countryCodes } = useStats();
   const svgRef = useRef<SVGSVGElement>(null);
+  const uid = useId().replace(/:/g, "");
   const [view, setView] = useState<View>(initial ?? { k: 1, x: 0, y: 0 });
   const [animating, setAnimating] = useState(false);
   const [unit, setUnit] = useState(1); // unités SVG par pixel écran
@@ -105,6 +108,10 @@ const WorldMap = forwardRef<WorldMapHandle, {
     reset: () => {
       setAnimating(true);
       setView({ k: 1, x: 0, y: 0 });
+    },
+    jump: (v: View) => {
+      setAnimating(false);
+      setView(clampView(v));
     },
   }));
 
@@ -172,7 +179,9 @@ const WorldMap = forwardRef<WorldMapHandle, {
 
   const r = stampPx * unit; // rayon du tampon en unités SVG à zoom 1
   const showLabels = view.k >= 7;
-  const visibleParks = PARKS.filter((p) => !filter || filter.has(statuses[p.id]));
+  const visibleParks = PARKS.filter((p) => !filter || filter.has(statuses[p.id])).sort(
+    (a, b) => Number(!!featured?.includes(a.id)) - Number(!!featured?.includes(b.id)),
+  );
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -230,6 +239,7 @@ const WorldMap = forwardRef<WorldMapHandle, {
             const isSel = selected === p.id;
             const scale = (isSel ? 1.25 : 1) / view.k;
             const icon = st === "visite" || st === "decouvrir" ? p.art : ICON_FOR[st];
+            const big = !!featured && (featured.includes(p.id) || view.k >= 3.5);
             return (
               <g
                 key={p.id}
@@ -246,6 +256,10 @@ const WorldMap = forwardRef<WorldMapHandle, {
                 aria-label={`${p.name}, ${m.label}`}
               >
                 <g className={justStamped === p.id ? "map-stamp-drop" : st === "prochain" ? "map-stamp-pulse" : ""}>
+                  {big ? (
+                    <BigStamp id={`${uid}-${p.id}`} R={featuredPx * unit} px={featuredPx} name={p.name} art={p.art} status={st} />
+                  ) : (
+                    <>
                   <circle r={r * 1.18} fill="#1f2a4d" opacity="0.08" cy={r * 0.12} />
                   <circle r={r} fill={m.fill} stroke={m.ink} strokeWidth={r * 0.13} strokeDasharray={`${r * 2.6} ${r * 0.18} ${r * 1.4} ${r * 0.22}`} />
                   <circle r={r * 0.72} fill="none" stroke={m.ink} strokeWidth={r * 0.05} opacity="0.6" />
@@ -254,8 +268,10 @@ const WorldMap = forwardRef<WorldMapHandle, {
                       <ArtGlyph kind={icon} strokeWidth={7} />
                     </g>
                   )}
+                    </>
+                  )}
                 </g>
-                {(showLabels || isSel) && (
+                {(showLabels || isSel) && !big && (
                   <text
                     y={r * 2.1}
                     textAnchor="middle"
@@ -349,4 +365,57 @@ function Deco({ kind, x, y }: WorldData["deco"][number]) {
         </g>
       );
   }
+}
+
+const BADGE: Record<StampStatus, string | null> = {
+  decouvrir: null,
+  visite: "M-0.5 0 L-0.15 0.38 L0.5 -0.35",
+  wishlist: "M0 -0.6 L0.18 -0.18 L0.6 -0.15 L0.28 0.12 L0.38 0.55 L0 0.32 L-0.38 0.55 L-0.28 0.12 L-0.6 -0.15 L-0.18 -0.18 Z",
+  prochain: "M-0.55 0.1 L0.55 -0.35 L0.1 0.55 L0 0.1 Z",
+  defi: "M-0.35 -0.5 H0.35 V-0.1 A0.35 0.35 0 0 1 -0.35 -0.1 Z M0 0.25 V0.45 M-0.25 0.5 H0.25",
+};
+
+// Grand tampon passeport, avec le nom du parc en arc de cercle
+function BigStamp({ id, R, px, name, art, status }: { id: string; R: number; px: number; name: string; art: ArtKind; status: StampStatus }) {
+  const m = STATUS_META[status];
+  const a = R * 0.8;
+  const label = name.toUpperCase();
+  const fs = R * (label.length > 14 ? 0.17 : 0.21);
+  const badge = BADGE[status];
+  return (
+    <>
+      <circle r={R * 1.06} fill="#1f2a4d" opacity="0.08" cy={R * 0.1} />
+      <circle r={R} fill={m.fill} stroke={m.ink} strokeWidth={R * 0.07} strokeDasharray={`${R * 2.4} ${R * 0.1} ${R * 1.3} ${R * 0.14}`} />
+      <circle r={R * 0.6} fill="none" stroke={m.ink} strokeWidth={R * 0.03} opacity="0.7" />
+      {px >= 26 && (
+        <>
+          <path id={id} d={`M ${-a},0 a ${a},${a} 0 1,1 ${2 * a},0 a ${a},${a} 0 1,1 ${-2 * a},0`} fill="none" />
+          <text fill={m.ink} fontSize={fs} fontWeight={700} letterSpacing={R * 0.03} fontFamily="var(--font-poppins), sans-serif">
+            <textPath href={`#${id}`} startOffset="25%" textAnchor="middle">
+              {label}
+            </textPath>
+          </text>
+          <circle cx={-R * 0.78} cy={R * 0.25} r={R * 0.035} fill={m.ink} />
+          <circle cx={R * 0.78} cy={R * 0.25} r={R * 0.035} fill={m.ink} />
+        </>
+      )}
+      <g transform={`translate(${-R * 0.42} ${-R * 0.42}) scale(${(R * 0.84) / 100})`} color={m.ink}>
+        <ArtGlyph kind={art} strokeWidth={6} />
+      </g>
+      {badge && (
+        <g transform={`translate(${R * 0.72} ${R * 0.72})`}>
+          <circle r={R * 0.27} fill={m.ink} stroke="#fff" strokeWidth={R * 0.05} />
+          <path
+            d={badge}
+            transform={`scale(${R * 0.27})`}
+            fill={status === "wishlist" ? "#fff" : "none"}
+            stroke="#fff"
+            strokeWidth={0.16}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+      )}
+    </>
+  );
 }

@@ -32,18 +32,6 @@ const CHECKLIST = [
 
 export const TRIPS: Trip[] = [
   {
-    id: "disneyland-paris-2027", parkId: "disneyland-paris", start: "2027-02-13", end: "2027-02-15",
-    travellers: "2 adultes",
-    tickets: [
-      { label: "Disneyland Paris", detail: "2 adultes · 2 parcs · 3 jours", ref: "DLP-2027-4471" },
-    ],
-    hotel: { name: "Hôtel du Lac Enchanté", stars: 4, checkIn: "15h00", checkOut: "11h00", address: "Marne-la-Vallée, France", phone: "+33 1 00 00 00 00", art: "castle" },
-    parking: { name: "Parking visiteurs", price: "30 € / jour", info: ["Réservation non nécessaire", "Gratuit pour les clients de l'hôtel"], walk: "10 min de l'entrée" },
-    transport: { mode: "Train", detail: "TGV Strasbourg → Marne-la-Vallée Chessy, 2 h 30" },
-    checklist: CHECKLIST.map((label, i) => ({ id: `dlp-${i}`, label, done: i < 3 })),
-    notes: "Faire Big Thunder Mountain dès l'ouverture. Parade à 17h30.",
-  },
-  {
     id: "europa-park-2027", parkId: "europa-park", start: "2027-04-14", end: "2027-04-16",
     travellers: "2 adultes, 2 enfants",
     tickets: [
@@ -55,6 +43,18 @@ export const TRIPS: Trip[] = [
     transport: { mode: "Voiture", detail: "Strasbourg → Rust, 50 min par l'A5" },
     checklist: CHECKLIST.map((label, i) => ({ id: `ep-${i}`, label, done: i < 8 })),
     notes: "Voltron Nevera en premier ! Dîner à l'Ammolite le samedi.",
+  },
+  {
+    id: "disneyland-paris-2027", parkId: "disneyland-paris", start: "2027-06-19", end: "2027-06-21",
+    travellers: "2 adultes",
+    tickets: [
+      { label: "Disneyland Paris", detail: "2 adultes · 2 parcs · 3 jours", ref: "DLP-2027-4471" },
+    ],
+    hotel: { name: "Hôtel du Lac Enchanté", stars: 4, checkIn: "15h00", checkOut: "11h00", address: "Marne-la-Vallée, France", phone: "+33 1 00 00 00 00", art: "castle" },
+    parking: { name: "Parking visiteurs", price: "30 € / jour", info: ["Réservation non nécessaire", "Gratuit pour les clients de l'hôtel"], walk: "10 min de l'entrée" },
+    transport: { mode: "Train", detail: "TGV Strasbourg → Marne-la-Vallée Chessy, 2 h 30" },
+    checklist: CHECKLIST.map((label, i) => ({ id: `dlp-${i}`, label, done: i < 3 })),
+    notes: "Faire Big Thunder Mountain dès l'ouverture. Parade à 17h30.",
   },
 ];
 
@@ -93,7 +93,8 @@ export type Challenge = {
 };
 
 export const CHALLENGES: Challenge[] = [
-  { id: "parcs-disney", title: "Tous les parcs Disney", description: "Visite tous les parcs Disney dans le monde.", art: "castle", color: "#9a72c4", total: 12, done: 8, parkIds: ["disneyland-paris", "magic-kingdom", "tokyo-disney-resort"], reward: { badge: "Badge Or", xp: 500 } },
+  { id: "coasters-allemagne", title: "Les coasters d'Allemagne", description: "Ride 10 coasters dans les parcs allemands.", art: "loop", color: "#9a72c4", total: 10, done: 6, parkIds: ["europa-park", "phantasialand"], reward: { badge: "Badge Bretzel", xp: 400 } },
+  { id: "parcs-disney", title: "Tous les parcs Disney", description: "Visite tous les parcs Disney dans le monde.", art: "castle", color: "#7d8fd6", total: 12, done: 8, parkIds: ["disneyland-paris", "magic-kingdom", "tokyo-disney-resort"], reward: { badge: "Badge Or", xp: 500 } },
   { id: "coasters-europe", title: "Tous les coasters d'Europe", description: "Ride 100 coasters en Europe.", art: "wooden", color: "#e08a3c", total: 100, done: 68, parkIds: ["europa-park", "phantasialand", "parc-asterix", "efteling", "liseberg", "portaventura", "gardaland"], reward: { badge: "Badge Europe", xp: 800 } },
   { id: "maitre-sensations", title: "Maître des sensations", description: "Ride 20 coasters de plus de 100 km/h.", art: "flame", color: "#f28b82", total: 20, done: 15, parkIds: ["cedar-point", "ferrari-world", "portaventura"], reward: { badge: "Badge Flamme", xp: 600 } },
   { id: "tour-du-monde", title: "Tour du monde", description: "Visite des parcs dans 25 pays différents.", art: "globe", color: "#3f9e9c", total: 25, done: 12, parkIds: ["beto-carrero", "dreamworld", "gold-reef-city", "fuji-q"], reward: { badge: "Badge Globe-trotter", xp: 1000 } },

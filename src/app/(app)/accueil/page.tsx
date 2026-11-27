@@ -1,9 +1,6 @@
-import type { Metadata } from "next";
-import { getWorld } from "@/lib/world";
-import Home from "./Home";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = { title: "Accueil · CoasterAtlas" };
-
+// L'accueil est maintenant la carte du monde, à la racine du site.
 export default function Page() {
-  return <Home world={getWorld()} />;
+  redirect("/");
 }

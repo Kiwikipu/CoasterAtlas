@@ -68,7 +68,7 @@ export default function Welcome() {
             );
           })}
         </div>
-        <Link href="/accueil" className="mt-auto rounded-full bg-teal py-3.5 text-center font-display font-semibold text-white shadow-lg shadow-teal/30 hover:bg-teal-dark">
+        <Link href="/" className="mt-auto rounded-full bg-teal py-3.5 text-center font-display font-semibold text-white shadow-lg shadow-teal/30 hover:bg-teal-dark">
           {types.length ? "C'est parti !" : "Passer"}
         </Link>
       </main>

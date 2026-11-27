@@ -54,7 +54,7 @@ export function Avatar({ name, size = 44 }: { name: string; size?: number }) {
   );
 }
 
-export function BackHeader({ title, href = "/accueil", action }: { title?: string; href?: string; action?: React.ReactNode }) {
+export function BackHeader({ title, href = "/", action }: { title?: string; href?: string; action?: React.ReactNode }) {
   return (
     <header className="sticky top-0 z-20 -mx-4 mb-2 flex items-center justify-between bg-cream/85 px-4 py-3 backdrop-blur">
       <Link href={href} aria-label="Retour" className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm shadow-navy/10">
