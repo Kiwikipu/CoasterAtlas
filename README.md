@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌍 CoasterAtlas
 
-## Getting Started
+La carte mondiale des parcs d'attractions. Où que tu sois, tu vois les parcs autour de toi, les coasters, leurs notes et les liens vers les applis officielles. Tu peux aussi garder le souvenir de tes visites (coasters faits, badges, carte des pays visités).
 
-First, run the development server:
+On commence par un **site web**. Une application mobile viendra ensuite.
+
+## Technologies
+
+- [Next.js](https://nextjs.org) 15 (React, TypeScript)
+- [Tailwind CSS](https://tailwindcss.com) pour le style
+- Hébergement prévu sur [Vercel](https://vercel.com) (gratuit pour commencer)
+
+## Lancer le projet sur ton ordinateur
+
+### 1. Installer les outils (une seule fois)
+
+- **Node.js** version 20 ou plus : télécharge la version « LTS » sur [nodejs.org](https://nodejs.org) et installe-la. Vérifie dans un terminal :
+  ```bash
+  node -v
+  npm -v
+  ```
+- **Git** : [git-scm.com](https://git-scm.com/downloads) (sur Mac, il est souvent déjà installé).
+- **VS Code** (conseillé) : [code.visualstudio.com](https://code.visualstudio.com).
+
+### 2. Récupérer le code
+
+```bash
+git clone https://github.com/Kiwikipu/coasteratlas.git
+cd coasteratlas
+```
+
+### 3. Installer les dépendances
+
+```bash
+npm install
+```
+
+Ça crée un dossier `node_modules` (il n'est jamais envoyé sur GitHub).
+
+### 4. Lancer le site en local
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Puis ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur. Chaque modification d'un fichier est visible tout de suite. Pour arrêter : `Ctrl + C` dans le terminal.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commandes utiles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Commande | Rôle |
+| --- | --- |
+| `npm run dev` | Lance le site en local |
+| `npm run build` | Prépare la version de production |
+| `npm run start` | Lance la version de production en local |
+| `npm run lint` | Vérifie la qualité du code |
 
-## Learn More
+## Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/app/         Pages du site (page.tsx = page d'accueil)
+public/          Images et fichiers statiques
+.github/         Modèles d'issues et de PR, vérification automatique (CI)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Mettre le site en ligne
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Crée un compte sur [vercel.com](https://vercel.com) avec ton compte GitHub.
+2. « Add New Project », choisis le dépôt `coasteratlas`, clique sur « Deploy ».
+3. Ensuite, chaque modification poussée sur `main` met le site à jour automatiquement.
 
-## Deploy on Vercel
+## Feuille de route
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Carte du monde interactive avec les parcs
+- [ ] Fiche parc (coasters, horaires, lien vers l'appli officielle)
+- [ ] Fiche coaster (type, constructeur, année, notes)
+- [ ] « Autour de moi » (parcs dans un rayon donné)
+- [ ] Comptes utilisateurs : coasters faits, favoris, badges
+- [ ] Application mobile
