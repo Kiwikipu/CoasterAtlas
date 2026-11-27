@@ -58,6 +58,8 @@ Puis ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur. C
 
 ```
 src/app/         Pages du site (page.tsx = page d'accueil)
+src/components/  Éléments réutilisables (ex. Stamp = tampon passeport)
+docs/            Product Book, design system, maquettes
 public/          Images et fichiers statiques
 .github/         Modèles d'issues et de PR, vérification automatique (CI)
 ```
@@ -70,6 +72,8 @@ public/          Images et fichiers statiques
 
 ## Feuille de route
 
+- [x] Identité visuelle : couleurs, polices, tampons (voir [docs/](docs/))
+- [ ] Liste d'attente « Devenir Atlaster Fondateur »
 - [ ] Carte du monde interactive avec les parcs
 - [ ] Fiche parc (coasters, horaires, lien vers l'appli officielle)
 - [ ] Fiche coaster (type, constructeur, année, notes)

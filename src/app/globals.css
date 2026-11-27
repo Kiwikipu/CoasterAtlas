@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Palette CoasterAtlas : voir docs/design-system.md */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-navy: #1f2a4d;
+  --color-teal: #6cc3c1;
+  --color-teal-dark: #3f9e9c;
+  --color-sage: #a8d5a2;
+  --color-sage-dark: #5f9e57;
+  --color-peach: #f7b57a;
+  --color-coral: #f28b82;
+  --color-lilac: #c9a7e8;
+  --color-lilac-dark: #9a72c4;
+  --color-sun: #fbd27a;
+  --color-sky: #8ec5e8;
+  --color-cream: #fff9f2;
+  --color-ocean: #e6f3f8;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-poppins);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-navy);
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+/* Légère pulsation du tampon « Prochain voyage » */
+@keyframes stamp-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.animate-stamp-pulse {
+  animation: stamp-pulse 2.4s ease-in-out infinite;
+}
+
+/* Animation signature : le tampon qui se pose (« clac ») */
+@keyframes stamp-drop {
+  0% { transform: scale(1.8) rotate(-18deg); opacity: 0; }
+  60% { transform: scale(0.94) rotate(-6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-8deg); opacity: 1; }
+}
+.animate-stamp-drop {
+  animation: stamp-drop 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-stamp-pulse, .animate-stamp-drop { animation: none; }
 }
