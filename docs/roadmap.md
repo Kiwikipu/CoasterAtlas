@@ -4,8 +4,10 @@
 
 - [x] Projet Next.js et dépôt GitHub
 - [x] Couleurs, polices et tampons sur la page d'accueil
-- [ ] Page de présentation complète (logo, captures, promesse)
-- [ ] Liste d'attente « 🚀 Devenir Atlaster Fondateur » (badge exclusif *Founding Atlaster*)
+- [x] Page de présentation complète (logo, captures, promesse)
+- [x] Formulaire « 🚀 Devenir Atlaster Fondateur » (interface, badge exclusif *Founding Atlaster*)
+- [ ] Enregistrer les inscriptions (service à choisir)
+- [x] Prototype cliquable de toute l'app (carte, fiches, Atlas, passeport, défis, carnet, voyages)
 - [ ] Mise en ligne sur Vercel
 
 ## Prototype de l'application

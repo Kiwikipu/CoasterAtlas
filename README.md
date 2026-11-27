@@ -54,14 +54,35 @@ Puis ouvre [http://localhost:3000](http://localhost:3000) dans ton navigateur. C
 | `npm run start` | Lance la version de production en local |
 | `npm run lint` | Vérifie la qualité du code |
 
+## Les pages du site
+
+| Adresse | Page |
+| --- | --- |
+| `/` | **Mon Voyage** : la grande carte du monde avec les tampons passeport (légende, filtre, « autour de moi »), puis prochain voyage, défi du moment, Explorer, Ton Atlas, souvenir du jour, Atlasters |
+| `/carte` | Carte en plein écran avec recherche et zoom |
+| `/bienvenue` | Premier lancement : 4 écrans, puis « Quel type d'Atlaster es-tu ? » |
+| `/parcs` et `/parcs/europa-park` | Liste des parcs et fiche parc |
+| `/coasters` et `/coasters/silver-star` | Liste des coasters (« Je l'ai fait ») et fiche coaster |
+| `/atlas`, `/passeport` | Mon Atlas (profil, carte, badges) et passeport avec la frise des visites |
+| `/defis` | Défis en cours / terminés et détail d'un défi |
+| `/carnet` | Carnet de voyage et souvenirs (carte postale à partager) |
+| `/voyages` | Planificateur : billets, hôtel, parking, transport, checklist |
+| `/visite` | « Je visite un parc » : pose un tampon avec l'animation « clac » |
+
+Le bouton central **globe** ouvre les raccourcis : je visite un parc, ajouter un coaster, ajouter un souvenir, écrire un avis, ma wishlist.
+
+Les données sont **des exemples** (`src/data/`). Le profil de démonstration (tampons, coasters faits, checklist) est gardé dans ton navigateur : rien n'est envoyé sur un serveur pour l'instant.
+
 ## Structure
 
 ```
-src/app/         Pages du site (page.tsx = page d'accueil)
-src/components/  Éléments réutilisables (ex. Stamp = tampon passeport)
-docs/            Product Book, design system, maquettes
-public/          Images et fichiers statiques
-.github/         Modèles d'issues et de PR, vérification automatique (CI)
+src/app/            Pages du site
+src/app/(app)/      Pages de l'application (avec la barre de navigation en bas)
+src/components/     Éléments réutilisables (Stamp = tampon, WorldMap = carte, Art = illustrations…)
+src/data/           Données d'exemple : parcs, coasters, voyages, souvenirs, défis
+src/lib/            Carte du monde (world.ts), état du profil (store.tsx), dates
+docs/               Product Book, design system, maquettes
+.github/            Modèles d'issues et de PR, vérification automatique (CI)
 ```
 
 ## Mettre le site en ligne
@@ -73,10 +94,9 @@ public/          Images et fichiers statiques
 ## Feuille de route
 
 - [x] Identité visuelle : couleurs, polices, tampons (voir [docs/](docs/))
-- [ ] Liste d'attente « Devenir Atlaster Fondateur »
-- [ ] Carte du monde interactive avec les parcs
-- [ ] Fiche parc (coasters, horaires, lien vers l'appli officielle)
-- [ ] Fiche coaster (type, constructeur, année, notes)
-- [ ] « Autour de moi » (parcs dans un rayon donné)
+- [x] Prototype complet du site : accueil, carte, fiches parc et coaster, Atlas, passeport, défis, carnet, voyages
+- [ ] Liste d'attente « Devenir Atlaster Fondateur » (plus tard)
+- [ ] Vraies données de parcs et de coasters
+- [ ] « Autour de moi » avec la vraie position (déjà possible en démo)
 - [ ] Comptes utilisateurs : coasters faits, favoris, badges
 - [ ] Application mobile

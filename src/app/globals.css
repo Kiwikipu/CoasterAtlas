@@ -48,3 +48,58 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-stamp-pulse, .animate-stamp-drop { animation: none; }
 }
+
+/* Tampons sur la carte */
+@keyframes map-drop {
+  0% { transform: scale(2.6) rotate(-20deg); opacity: 0; }
+  55% { transform: scale(0.88) rotate(4deg); opacity: 1; }
+  75% { transform: scale(1.08) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.map-stamp-drop { animation: map-drop 0.7s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+@keyframes map-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+.map-stamp-pulse { animation: map-pulse 2.4s ease-in-out infinite; }
+
+/* Grand tampon qui se pose (« clac ») au centre de l'écran */
+@keyframes big-stamp {
+  0% { transform: scale(2.4) rotate(-24deg); opacity: 0; }
+  50% { transform: scale(0.9) rotate(-6deg); opacity: 1; }
+  65% { transform: scale(1.05) rotate(-9deg); }
+  100% { transform: scale(1) rotate(-8deg); opacity: 1; }
+}
+.animate-big-stamp { animation: big-stamp 0.75s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+@keyframes ink-ring {
+  0% { transform: scale(0.6); opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.animate-ink-ring { animation: ink-ring 0.9s ease-out 0.35s both; }
+
+@keyframes fade-up {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-fade-up { animation: fade-up 0.35s ease-out both; }
+
+@keyframes pop-in {
+  from { transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.3); opacity: 0; }
+  to { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+.animate-pop-in { animation: pop-in 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.card { background: #ffffff; border-radius: 1.5rem; box-shadow: 0 6px 24px -12px rgba(31, 42, 77, 0.18); }
+
+@media (prefers-reduced-motion: reduce) {
+  .map-stamp-drop, .map-stamp-pulse, .animate-big-stamp, .animate-ink-ring, .animate-fade-up, .animate-pop-in { animation: none; }
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0); }
+  20%, 60% { transform: rotate(14deg); }
+  40%, 80% { transform: rotate(-8deg); }
+}
