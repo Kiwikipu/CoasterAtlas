@@ -25,8 +25,8 @@ On commence par un **site web**. Une application mobile viendra ensuite.
 ### 2. Récupérer le code
 
 ```bash
-git clone https://github.com/Kiwikipu/coasteratlas.git
-cd coasteratlas
+git clone https://github.com/Kiwikipu/CoasterAtlas.git
+cd CoasterAtlas
 ```
 
 ### 3. Installer les dépendances
@@ -65,7 +65,7 @@ public/          Images et fichiers statiques
 ## Mettre le site en ligne
 
 1. Crée un compte sur [vercel.com](https://vercel.com) avec ton compte GitHub.
-2. « Add New Project », choisis le dépôt `coasteratlas`, clique sur « Deploy ».
+2. « Add New Project », choisis le dépôt `CoasterAtlas`, clique sur « Deploy ».
 3. Ensuite, chaque modification poussée sur `main` met le site à jour automatiquement.
 
 ## Feuille de route
